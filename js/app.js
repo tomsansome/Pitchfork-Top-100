@@ -29,6 +29,16 @@ function eventListeners() {
   SELECTOR.find('.next-track').on('click', function(e) { onNextClicked(e); });
   SELECTOR.find('.prev-track').on('click', function(e) { onPrevClicked(e); });
   SELECTOR.find('.info-button').on('click', function(e) { onTrackInfoClicked(e); });
+  $(document).on("keyup", function (e) { onKeyPressed(e); });
+}
+
+function onKeyPressed (e) {
+  var key = e.keyCode;
+  if (key === 39) {
+    findNextVideo();
+  } else if (key === 37) {
+    findPrevVideo();
+  }
 }
 
 function getData() {
