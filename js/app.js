@@ -9,6 +9,7 @@ var player;
 var videoLoading = false;
 var errorTimeout;
 var imageList = [];
+var isPlaying = false;
 var is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
 function init() {
@@ -38,6 +39,13 @@ function onKeyPressed (e) {
     findNextVideo();
   } else if (key === 37) {
     findPrevVideo();
+  } else if (key === 32 || e.which === 32) {
+    if (isPlaying) {
+      pauseVideo();
+    } else {
+      playVideo();
+    }
+    e.preventDefault();
   }
 }
 
@@ -125,6 +133,7 @@ function onPlayerStateChange(event) {
     videoLoading = false;
     clearInterval(errorTimeout);
     closeError();
+    isPlaying = true;
   } else {
     // Otherwise, remove playing class
     SELECTOR.find('.song').eq(currentVideo).removeClass('playing');
@@ -213,6 +222,10 @@ function findPrevVideo() {
   }
 }
 
+function goToVideo() {
+  $('html, body').animate({ scrollTop: SELECTOR.find('.song').eq(currentVideo).offset().top }, 200);
+}
+
 function onTrackInfoClicked(e) {
   var elClicked = $(e.currentTarget),
       video = SELECTOR.find('.song').eq(currentVideo),
@@ -276,6 +289,7 @@ function loadVideo(id) {
       setCurrentVideo();
       player.loadVideoById(id);
       infoHint();
+      goToVideo();
     }
   }
 }
@@ -299,6 +313,7 @@ function closeInfo() {
 
 function pauseVideo() {
   player.pauseVideo();
+  isPlaying = false;
 }
 
 function playVideo() {
