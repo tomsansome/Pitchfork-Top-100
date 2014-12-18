@@ -16,7 +16,11 @@ function init() {
   setupSelectors();
   getData();
   eventListeners();
-  getFirstVideo();
+  if (localStorage.getItem('currentVideo') === null) {
+    getFirstVideo();
+  } else {
+    getLocalStorage();
+  }
   loadApi();
 }
 
@@ -91,6 +95,11 @@ function getFirstVideo() {
   firstVideoID = $(songs)[0].videoID;
 }
 
+function getLocalStorage() {
+  var getItem = localStorage.getItem('currentVideo');
+  firstVideoID = SELECTOR.find('.song').eq(getItem).data('vid');
+}
+
 function loadApi() {
   if (!is_mobile) {
     var tag = document.createElement('script');
@@ -117,8 +126,15 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerReady(event) {
-  currentVideo = 0;
+  if (localStorage.getItem('currentVideo') === null) {
+    currentVideo = 0;
+  } else {
+    currentVideo = localStorage.getItem('currentVideo');
+  }
   setCurrentVideo();
+  setTimeout(function(){
+    goToVideo();
+  }, 400);
   event.target.playVideo();
 }
 
@@ -209,6 +225,10 @@ function findNextVideo() {
   if (!videoLoading) {
     closeInfo();
     currentVideo++;
+    // If end of playlist, repeat
+    if (currentVideo === 100) {
+      currentVideo = 0;
+    }
     nextVideo = SELECTOR.find('.song').eq(currentVideo).data('vid');
     loadVideo(nextVideo);
   }
@@ -290,8 +310,13 @@ function loadVideo(id) {
       player.loadVideoById(id);
       infoHint();
       goToVideo();
+      setLocalStorage();
     }
   }
+}
+
+function setLocalStorage() {
+  localStorage.setItem('currentVideo', currentVideo);
 }
 
 function setCurrentVideo() {
