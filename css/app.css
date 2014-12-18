@@ -175,6 +175,20 @@ iframe {
   vertical-align: middle;
   cursor: pointer;
   overflow: hidden;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.song-overlay {
+  display: none;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0,0,0,0.75);
+}
+
+.song.active .song-overlay {
+  display: block;
 }
 
 .song.na {
@@ -183,6 +197,7 @@ iframe {
 
 .song.active {
   background: #ccc;
+  color: white;
 }
 
 .song .duration {
@@ -255,8 +270,8 @@ iframe {
 .buffering .loader:not(:required):before {
   content: '';
   border-radius: 50%;
-  border: 2px solid #ccc;
-  border-top-color: blue;
+  border: 2px solid transparent;
+  border-top-color: white;
   animation: spinner .4s linear infinite;
   -webkit-animation: spinner .4s linear infinite;
 }
@@ -281,10 +296,14 @@ iframe {
   border-left: 20px solid blue;
 }
 
+.song.active .play-pause {
+  border-left-color: white;
+}
+
 .playing .play-pause {
   display: block;
   width: 8px; height: 20px;
-  background: blue;
+  background: white;
   border: 0;
 }
 
@@ -293,7 +312,7 @@ iframe {
   display: block;
   position: relative;
   width: 8px; height: 20px;
-  background: blue;
+  background: white;
   left: 12px;
 }
 
