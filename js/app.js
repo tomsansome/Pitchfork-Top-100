@@ -273,7 +273,12 @@ function onTrackInfoClicked(e) {
     '<h1>'+title+'</h1><h2>'+artist+'</h2><a class="button search-artist" target="_blank" href="https://www.google.co.uk/#q='+artistSearch+'">Search Artist</a><a class="button watch-video" target="_blank" href="https://www.youtube.com/watch?v='+videoID+'">Watch Video</a>'
   )
 
+  bodyOverflow();
   newListeners();
+}
+
+function bodyOverflow() {
+  SELECTOR.toggleClass('no-scroll');
 }
 
 function newListeners() {
@@ -348,6 +353,7 @@ function setBackgroundImage() {
 function closeInfo() {
   SELECTOR.find('.track-info').removeClass('active');
   SELECTOR.find('.track-info .inner').empty();
+  bodyOverflow();
 }
 
 function pauseVideo() {
