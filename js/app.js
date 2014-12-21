@@ -136,12 +136,12 @@ function onPlayerReady(event) {
   }
   setCurrentVideo();
   setBackgroundImage();
+  setPageTitle();
   goToVideo(1000);
   event.target.playVideo();
 }
 
 function onPlayerStateChange(event) {
-  console.log(event);
   // If video complete, find next video automatically
   if (event.data === 0) {
     findNextVideo();
@@ -346,6 +346,7 @@ function loadVideo(id) {
       goToVideo(750);
       setLocalStorage();
       setBackgroundImage();
+      setPageTitle();
     }
   }
 }
@@ -375,6 +376,13 @@ function setBackgroundImage() {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat'
   })
+}
+
+function setPageTitle() {
+  var originalTitle = $('title').html(),
+      newTitle = $(songs)[currentVideo].title;
+      artist = $(songs)[currentVideo].artist;
+  $('title').html(newTitle + ' - ' + artist + ' - ' + originalTitle);
 }
 
 function closeInfo() {
