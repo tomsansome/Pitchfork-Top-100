@@ -4,6 +4,8 @@ var listElement = null;
 var firstVideoID = '';
 var videoID = '';
 var currentVideo = 0;
+var playTimer = null;
+var playProgress = 0;
 var nextVideo = null;
 var player;
 var videoLoading = false;
@@ -139,6 +141,7 @@ function onPlayerReady(event) {
 }
 
 function onPlayerStateChange(event) {
+  console.log(event);
   // If video complete, find next video automatically
   if (event.data === 0) {
     findNextVideo();
@@ -150,9 +153,11 @@ function onPlayerStateChange(event) {
     clearInterval(errorTimeout);
     closeError();
     isPlaying = true;
+    startPlayTimer();
   } else {
     // Otherwise, remove playing class
     SELECTOR.find('.song').eq(currentVideo).removeClass('playing');
+    stopPlayTimer();
   }
   // If buffering, show loader
   if (event.data === -1 || event.data === 3) {
@@ -186,6 +191,27 @@ function showError(message) {
 function closeError() {
   SELECTOR.find('.error-message .inner').empty();
   SELECTOR.find('.error-message').removeClass('active');
+}
+
+function startPlayTimer() {
+  clearInterval(playTimer);
+  playTimer = setInterval(function() { onPlayProgress() }, 20);
+}
+
+function stopPlayTimer() {
+  clearInterval(playTimer);
+}
+
+function onPlayProgress() {
+  var progress = 0,
+      currentTime = Math.floor(player.getCurrentTime());
+
+  playProgress = currentTime / player.getDuration() * 100;
+  setProgress();
+}
+
+function setProgress() {
+  SELECTOR.find('.song').eq(currentVideo).find('.duration').css({ width: playProgress + '%' });
 }
 
 function onItemClicked(e) {
@@ -229,7 +255,7 @@ function findNextVideo() {
     if (currentVideo === 100) {
       currentVideo = 0;
     }
-    nextVideo = SELECTOR.find('.song').eq(currentVideo).data('vid');
+    nextVideo = $(songs)[currentVideo].videoID;
     loadVideo(nextVideo);
   }
 }
@@ -237,7 +263,7 @@ function findNextVideo() {
 function findPrevVideo() {
   if (!videoLoading) {
     currentVideo--;
-    prevVideo = SELECTOR.find('.song').eq(currentVideo).data('vid');
+    prevVideo = $(songs)[currentVideo].videoID;
     loadVideo(prevVideo);
   }
 }
@@ -304,6 +330,7 @@ function onWatchClicked() {
 }
 
 function loadVideo(id) {
+  SELECTOR.find('.duration').width(0);
   if (SELECTOR.find('.song').eq(currentVideo).hasClass('na')) {
     findNextVideo();
   } else {
