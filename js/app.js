@@ -327,7 +327,6 @@ function offSearchHover() {
 
 function onCloseClicked() {
   closeInfo();
-  enableScroll();
 }
 
 function onWatchClicked() {
@@ -393,7 +392,7 @@ function setPageTitle() {
 function closeInfo() {
   SELECTOR.find('.track-info').removeClass('active');
   SELECTOR.find('.track-info .inner').empty();
-  bodyOverflow();
+  enableScroll();
 }
 
 function pauseVideo() {
