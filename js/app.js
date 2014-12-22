@@ -299,12 +299,16 @@ function onTrackInfoClicked(e) {
     '<h1>'+title+'</h1><h2>'+artist+'</h2><a class="button search-artist" target="_blank" href="https://www.google.co.uk/#q='+artistSearch+'">Search Artist</a><a class="button watch-video" target="_blank" href="https://www.youtube.com/watch?v='+videoID+'">Watch Video</a>'
   )
 
-  bodyOverflow();
+  stopScroll();
   newListeners();
 }
 
-function bodyOverflow() {
-  SELECTOR.toggleClass('no-scroll');
+function stopScroll() {
+  SELECTOR.addClass('no-scroll');
+}
+
+function enableScroll() {
+  SELECTOR.removeClass('no-scroll');
 }
 
 function newListeners() {
@@ -323,6 +327,7 @@ function offSearchHover() {
 
 function onCloseClicked() {
   closeInfo();
+  enableScroll();
 }
 
 function onWatchClicked() {
