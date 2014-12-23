@@ -22,7 +22,7 @@ body.no-scroll {
 iframe {
   position: fixed;
   top: 0;
-  /*left: -99999px;*/
+  left: -99999px;
 }
 
 .error-message {
@@ -60,7 +60,7 @@ iframe {
   left: 0;
   width: 100%;
   padding: 10px 0;
-  background: yellow;
+  background: #FFFF00;
   z-index: 3;
 }
 
@@ -88,11 +88,15 @@ iframe {
 
 .next-track span {
   border-right: 3px solid blue;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
 .prev-track span {
   border-left: 3px solid blue;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 
@@ -119,6 +123,8 @@ iframe {
 }
 
 .info-button.hint {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
 
@@ -223,7 +229,7 @@ iframe {
 
 .title {
   width: 40%;
-  top: 11px;
+  top: 8px;
 }
 
 .title p {
@@ -235,7 +241,7 @@ iframe {
 
 .artist {
   width: 50%;
-  top: 11px;
+  top: 8px;
 }
 
 .artist p {
@@ -250,11 +256,19 @@ iframe {
 }
 
 @keyframes spinner {
-    to {transform: rotate(360deg);}
+    to {
+      -webkit-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
 }
  
 @-webkit-keyframes spinner {
-    to {-webkit-transform: rotate(360deg);}
+    to {
+      -webkit-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
 }
  
 .buffering .loader {
@@ -484,7 +498,6 @@ iframe {
     max-width: none;
     display: block;
     text-align: center;
-
   }
 
   .title {
