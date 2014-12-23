@@ -65,9 +65,10 @@ iframe {
 }
 
 .global-nav a {
-  width: 32.5%;
+  width: 32%;
   display: inline-block;
   text-align: center;
+  vertical-align: top;
 }
 
 .global-nav a span {
@@ -84,6 +85,7 @@ iframe {
 .next-track,
 .prev-track {
   cursor: pointer;
+  margin-top: 5px;
 }
 
 .next-track span {
